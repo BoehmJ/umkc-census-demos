@@ -1,5 +1,4 @@
-#' Exploring Census Data with R ################################################
-#' This  script will get you through 
+# Exploring Census Data with R ################################################
 
 
 # Load Required Packages #######################################################
