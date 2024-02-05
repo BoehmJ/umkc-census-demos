@@ -18,3 +18,16 @@ Hadley Wickham coined the term [**Tidy Data**](https://vita.had.co.nz/papers/tid
 
 # Resources:
 - [Census Reporter](https://censusreporter.org/)
+- [Swirl](https://swirlstats.com/students.html) (Basic R skills)
+-  [Analyzing US Census Data: Methods, Maps, and Models with R](https://walker-data.com/census-r/index.html)
+-  [R  For Data Science](https://r4ds.hadley.nz/) by Hadley Wickham
+-  [Tidyverse](https://www.tidyverse.org/) R libraries: Helpful R libraries that extend Base R’s capabilities
+-  [Geocomputation in R](https://r.geocompx.org/)
+-  [Albert Rapp: Data Visualization Youtube Channel](https://www.youtube.com/@rappa753)
+-  [Cheatsheets for R](https://posit.co/resources/cheatsheets/) (Posit)
+-  [Awesome R](https://github.com/qinwf/awesome-R?tab=readme-ov-file) Github Bookmarks (list of misc. R resources)
+-  [Quarto](https://quarto.org/): Publishing System for R (and Python, and other languages)
+-  [Regression and Other Stories](https://users.aalto.fi/~ave/ROS.pdf): Great, free, non-mathy accessible book on regression analysis and stats from a Bayesian perspective (using R and Stan)
+-  [Causal Inference Mixtape](https://mixtape.scunning.com/)
+-  [IPUMS](https://www.ipums.org/): University of Minnesota Population Center data
+-  [Felt](https://felt.com/): Online mapping tool with generous free features that works well with qGIS 
