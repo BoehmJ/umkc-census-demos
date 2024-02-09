@@ -30,46 +30,42 @@ ks_study_cities = mo_cities |>
   filter(NAME %in% c('Kansas City')) |>
   st_transform('ESRI:102698')
 
+kcmsa = core_based_statistical_areas() |>
+  filter(NAME == 'Kansas City, MO-KS') |>
+  st_transform('ESRI:102698')
+
 # Please refer to section 7.3 of the TidyCensus textbook for this analysis https://walker-data.com/census-r/spatial-analysis-with-us-census-data.html#small-area-time-series-analysis
 
 acs_vars <- load_variables(2022, 'acs5')
 
 
 # Acquire Data
-
-vehicles_jacomo = get_acs(
+vehicles_tract = get_acs(
   geography = 'tract',
-  state = 'MO',
-  county = '095',
+  cache = TRUE,
+  state = c('MO', 'KS'),
   table = 'B08201',
   output = 'wide',
   year = 2022,
-  geometry = TRUE)
-
-vehicles_wycoks = get_acs(
-  geography = 'tract',
-  state = 'KS',
-  county = '209',
-  table = 'B08201',
-  output = 'wide',
-  year = 2022,
-  geometry = TRUE)
-
-
-vehicles_ja_wy = bind_rows(vehicles_jacomo, vehicles_wycoks) |>
+  geometry = TRUE) |>
+  st_transform('ESRI:102698') |>
+  st_filter(kcmsa |> st_buffer(-500), .predicate = st_intersects) |> # The negative buffer of 500' helps us grab all the tracts that fall completely within the KC metro area, and non that overlap.
   mutate(zero_veh_hh_pct = 100*(B08201_002E / B08201_001E)) |>
   select(GEOID, NAME, zero_veh_hh = B08201_002E, zero_veh_hh_pct, geometry)
 
-ggplot(data = vehicles_ja_wy, aes(fill = zero_veh_hh_pct)) + 
+mapview(list(vehicles_tract,kcmsa))
+
+
+
+ggplot(data = vehicles_tract, aes(fill = zero_veh_hh_pct)) + 
   geom_sf() + 
   scale_fill_viridis(option = 'mako', direction = -1) +
-  geom_sf(data = analysis_areas, fill = NA, color = "black", linewidth = 1) + 
+  geom_sf(data = corridor, fill = NA, color = "black", linewidth = 1) + 
   theme_void()
 
 
-mapview(vehicles_ja_wy, zcol = 'zero_veh_hh_pct')
+mapview(vehicles_tract, zcol = 'zero_veh_hh_pct')
 
-mapview(list(vehicles_ja_wy, corridor), zcol = list('zero_veh_hh_pct', NULL))
 
 
 # Interpolate Data for Study Area and Sub Area
